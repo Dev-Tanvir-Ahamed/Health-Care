@@ -1,7 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { ENUM_USER_ROLE } from '../../../enums/user';
 import { FileUploadHelper } from '../../../helpers/fileUploadHelper';
-import auth from '../../middlewares/auth';
 import { SpecialtiesController } from './specialties.controller';
 import { SpecialtiesValidation } from './specialties.validations';
 
@@ -20,7 +18,7 @@ router.post(
 );
 router.delete(
   '/:id',
-  auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
+  // auth(ENUM_USER_ROLE.SUPER_ADMIN, ENUM_USER_ROLE.ADMIN),
   SpecialtiesController.deleteFromDB,
 );
 
