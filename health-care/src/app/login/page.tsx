@@ -8,22 +8,20 @@ import { storeUserInfo } from "@/services/auth.services";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Container, Link, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-const Page = () => {
-  const router = useRouter();
+const LoginPage = () => {
+  // const router = useRouter();
   const handleLogin = async (data: FieldValues) => {
-    console.log(data);
-
     try {
       const res = await loginPatient(data);
       console.log(res);
       if (res?.data?.accessToken) {
         toast.success(res?.message);
         storeUserInfo({ accessToken: res?.data?.accessToken });
-        router.push("/");
+        // router.push("/dashboard");
       } else {
         toast.error(res?.message);
         // setError(res?.message);
@@ -70,7 +68,7 @@ const Page = () => {
             />
           </Stack>
           <Box sx={{ textAlign: "right", mt: 2, mb: 4 }}>
-            <Link href="" underline="none" variant="body2">
+            <Link href="/forget-password" underline="none" variant="body2">
               Forget Password
             </Link>
           </Box>
@@ -95,4 +93,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default LoginPage;

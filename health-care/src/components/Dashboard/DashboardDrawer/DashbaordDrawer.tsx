@@ -1,21 +1,17 @@
 "use client";
-import MailIcon from "@mui/icons-material/Mail";
+
+import { useGetMyProfileQuery } from "@/redux/api/myProfileApi";
 import MenuIcon from "@mui/icons-material/Menu";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import { Stack } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import Sidebar from "../Sidebar/Sidebar";
 
 const drawerWidth = 240;
 
@@ -26,7 +22,11 @@ export default function ResponsiveDrawer({
 }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-
+  const { data: userData, isLoading } = useGetMyProfileQuery(undefined);
+  if (isLoading) {
+    return <p>loading...</p>;
+  }
+  console.log(userData);
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -42,39 +42,10 @@ export default function ResponsiveDrawer({
     }
   };
 
-  const drawer = (
-    <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-    </div>
-  );
+  // const profilePhoto = userData?.data?.profilePhoto
+  //   ? userData?.data?.profilePhoto
+  //   : userData?.data?.name;
 
-  // Remove this const when copying and pasting into your project.
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
@@ -83,6 +54,9 @@ export default function ResponsiveDrawer({
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
+          background: "#f4f7fe",
+          boxShadow: 0,
+          borderBottom: "1px solid lightgray",
         }}
       >
         <Toolbar>
@@ -91,13 +65,26 @@ export default function ResponsiveDrawer({
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { sm: "none" }, color: "primary.main" }}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Responsive drawer
-          </Typography>
+          <Stack
+            justifyContent="space-between"
+            direction="row"
+            width="100%"
+            alignItems="center"
+          >
+            <Typography
+              variant="body2"
+              noWrap
+              component="div"
+              color="primary.main"
+            >
+              {/* Welcome To, PH Health Care {userData?.data?.name || ""} !!! */}
+            </Typography>
+            {/* <AccountMenu profilePhoto={profilePhoto} /> */}
+          </Stack>
         </Toolbar>
       </AppBar>
       <Box
@@ -122,7 +109,7 @@ export default function ResponsiveDrawer({
             },
           }}
         >
-          {drawer}
+          <Sidebar />
         </Drawer>
         <Drawer
           variant="permanent"
@@ -135,7 +122,7 @@ export default function ResponsiveDrawer({
           }}
           open
         >
-          {drawer}
+          <Sidebar />
         </Drawer>
       </Box>
       <Box

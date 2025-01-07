@@ -1,17 +1,17 @@
-import { Doctor, Prisma, Specialties, UserStatus } from '@prisma/client';
+import { Doctor, Prisma, UserStatus } from '@prisma/client';
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/ApiError';
+import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { IGenericResponse } from '../../../interfaces/common';
+import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
+import { asyncForEach } from '../../../shared/utils';
+import { doctorSearchableFields } from './doctor.constants';
 import {
   IDoctorFilterRequest,
   IDoctorUpdate,
   ISpecialties,
 } from './doctor.interface';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IGenericResponse } from '../../../interfaces/common';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
-import { doctorSearchableFields } from './doctor.constants';
-import ApiError from '../../../errors/ApiError';
-import httpStatus from 'http-status';
-import { asyncForEach } from '../../../shared/utils';
 import { deleteDoctorFromMeili } from './doctor.utils';
 
 const insertIntoDB = async (data: Doctor): Promise<Doctor> => {
@@ -179,7 +179,6 @@ const getAllFromDB = async (
 };
 
 const getByIdFromDB = async (id: string): Promise<Doctor | null> => {
-  console.log(id);
   const result = await prisma.doctor.findUnique({
     where: {
       id,

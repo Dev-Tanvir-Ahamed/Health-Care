@@ -1,12 +1,20 @@
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Button } from "@mui/material";
 import Image from "next/image";
-const DoctorCard = ({ data }) => {
-  // console.log(data);
 
+interface Doctor {
+  id: string;
+  name: string;
+  profilePhoto: string;
+  qualification: string;
+  designation: string;
+  address: string;
+}
+
+const DoctorCard = ({ data }: { data: Doctor[] }) => {
   return (
     <>
-      {data.map((item) => {
+      {data.map((item: Doctor) => {
         return (
           <div key={item.id} className="bg-white h-[450px] w-[350px]">
             <div>

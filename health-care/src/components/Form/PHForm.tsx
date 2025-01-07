@@ -22,6 +22,13 @@ const PHForm = ({
   defaultValues,
 }: TPHFormProps) => {
   const methods = useForm({ resolver, defaultValues }); // Apply resolver and defaultValues here
+  const { handleSubmit, reset } = methods;
+  // Update form values dynamically when defaultValues change
+  // useEffect(() => {
+  //   if (defaultValues) {
+  //     reset(defaultValues);
+  //   }
+  // }, [defaultValues, reset]);
   // const formConfig: TFormConfig = {};
   // if (resolver) {
   //   formConfig["resolver"] = resolver;
@@ -31,9 +38,8 @@ const PHForm = ({
   // }
   // const methods = useForm(formConfig);
 
-  const { handleSubmit, reset } = methods;
   const submit: SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+    // console.log(data);
     onSubmit(data);
     reset();
   };

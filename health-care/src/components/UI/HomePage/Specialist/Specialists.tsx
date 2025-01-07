@@ -1,7 +1,11 @@
 import { Button, Container } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-
+type TSpecilistiesProps = {
+  id: string;
+  titie: string;
+  icon: string;
+};
 const Specialists = async () => {
   const res = await fetch("http://localhost:5000/api/v1/specialties", {
     next: {
@@ -21,7 +25,7 @@ const Specialists = async () => {
           Find experience doctors across all specialists
         </p>
         <div className="flex justify-center gap-5 items-center mt-10">
-          {specialists.map((specialist) => (
+          {specialists.slice(0, 6).map((specialist: TSpecilistiesProps) => (
             <div
               key={specialist.id}
               className=" size-40 content-center justify-items-center bg-neutral-100 border border-neutral-100 rounded-lg"

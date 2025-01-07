@@ -5,7 +5,7 @@ type TInputProps = {
   type?: string;
   size?: "small" | "medium";
   name: string;
-  fullWidth: boolean;
+  fullWidth?: boolean;
   sx?: SxProps;
   placeholder?: string;
   required?: boolean;
@@ -22,27 +22,25 @@ const InputForm = ({
 }: TInputProps) => {
   const { control } = useFormContext();
   return (
-    <div>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            {...field}
-            sx={{ ...sx }}
-            label={label}
-            variant="outlined"
-            fullWidth={fullWidth}
-            type={type}
-            size={size}
-            required={required}
-            placeholder={label}
-            error={!!error?.message}
-            helperText={error?.message}
-          />
-        )}
-      />
-    </div>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field, fieldState: { error } }) => (
+        <TextField
+          {...field}
+          sx={{ ...sx }}
+          label={label}
+          variant="outlined"
+          fullWidth={fullWidth}
+          type={type}
+          size={size}
+          required={required}
+          placeholder={label}
+          error={!!error?.message}
+          helperText={error?.message}
+        />
+      )}
+    />
   );
 };
 

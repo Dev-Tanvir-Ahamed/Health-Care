@@ -1,15 +1,15 @@
 import { Prisma, Schedule } from '@prisma/client';
 import { addHours, addMinutes, format } from 'date-fns';
+import { paginationHelpers } from '../../../helpers/paginationHelper';
+import { IGenericResponse } from '../../../interfaces/common';
+import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
 import { ISchedule, IScheduleFilterRequest } from './schedule.interface';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { IGenericResponse } from '../../../interfaces/common';
-import { paginationHelpers } from '../../../helpers/paginationHelper';
 
 const convertDateTime = async (date: Date) => {
   const offset = date.getTimezoneOffset() * 60000;
   return new Date(date.getTime() + offset);
-}
+};
 
 const insertIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
   const { startDate, endDate, startTime, endTime } = payload;
@@ -19,7 +19,7 @@ const insertIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
   const schedules = [];
 
   const currentDate = new Date(startDate); // start date
-  const lastDate = new Date(endDate) // end date
+  const lastDate = new Date(endDate); // end date
 
   while (currentDate <= lastDate) {
     // 09:30  ---> ['09', '30']
@@ -27,20 +27,20 @@ const insertIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
       addMinutes(
         addHours(
           `${format(currentDate, 'yyyy-MM-dd')}`,
-          Number(startTime.split(':')[0])
+          Number(startTime.split(':')[0]),
         ),
-        Number(startTime.split(':')[1])
-      )
+        Number(startTime.split(':')[1]),
+      ),
     );
 
     const endDateTime = new Date(
       addMinutes(
         addHours(
           `${format(currentDate, 'yyyy-MM-dd')}`,
-          Number(endTime.split(':')[0])
+          Number(endTime.split(':')[0]),
         ),
-        Number(endTime.split(':')[1])
-      )
+        Number(endTime.split(':')[1]),
+      ),
     );
 
     while (startDateTime < endDateTime) {
@@ -50,23 +50,23 @@ const insertIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
       // }
 
       const s = await convertDateTime(startDateTime);
-      const e = await convertDateTime(addMinutes(startDateTime, interverlTime))
+      const e = await convertDateTime(addMinutes(startDateTime, interverlTime));
 
       const scheduleData = {
         startDate: s,
-        endDate: e
-      }
+        endDate: e,
+      };
 
       const existingSchedule = await prisma.schedule.findFirst({
         where: {
           startDate: scheduleData.startDate,
-          endDate: scheduleData.endDate
-        }
+          endDate: scheduleData.endDate,
+        },
       });
 
       if (!existingSchedule) {
         const result = await prisma.schedule.create({
-          data: scheduleData
+          data: scheduleData,
         });
         schedules.push(result);
       }
@@ -143,7 +143,7 @@ const insertIntoDB = async (payload: ISchedule): Promise<Schedule[]> => {
 const getAllFromDB = async (
   filters: IScheduleFilterRequest,
   options: IPaginationOptions,
-  user: any
+  user: any,
 ): Promise<IGenericResponse<Schedule[]>> => {
   const { limit, page, skip } = paginationHelpers.calculatePagination(options);
   const { startDate, endDate, ...filterData } = filters; // Extracting startDate and endDate from filters
@@ -183,23 +183,24 @@ const getAllFromDB = async (
   const whereConditions: Prisma.ScheduleWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
 
-
   const doctorsSchedules = await prisma.doctorSchedule.findMany({
     where: {
       doctor: {
-        email: user.email
-      }
-    }
+        email: user.email,
+      },
+    },
   });
 
-  const doctorScheduleIds = new Set(doctorsSchedules.map(schedule => schedule.scheduleId));
+  const doctorScheduleIds = new Set(
+    doctorsSchedules.map(schedule => schedule.scheduleId),
+  );
 
   const result = await prisma.schedule.findMany({
     where: {
       ...whereConditions,
       id: {
-        notIn: [...doctorScheduleIds]
-      }
+        notIn: [...doctorScheduleIds],
+      },
     },
     skip,
     take: limit,
@@ -207,16 +208,16 @@ const getAllFromDB = async (
       options.sortBy && options.sortOrder
         ? { [options.sortBy]: options.sortOrder }
         : {
-          createdAt: 'desc',
-        },
+            createdAt: 'desc',
+          },
   });
   const total = await prisma.schedule.count({
     where: {
       ...whereConditions,
       id: {
-        notIn: [...doctorScheduleIds]
-      }
-    }
+        notIn: [...doctorScheduleIds],
+      },
+    },
   });
 
   return {

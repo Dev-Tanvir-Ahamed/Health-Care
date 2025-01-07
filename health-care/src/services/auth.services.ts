@@ -1,4 +1,5 @@
 import { authKey } from "@/constants/authKey";
+import { instance as axiosInstance } from "@/helpers/axios/axiosInstance";
 import { tokenDecoded } from "@/utils/jwtDecode";
 import {
   getFormLocalStorage,
@@ -14,7 +15,6 @@ export const getUserInfo = () => {
   const authToken = getFormLocalStorage(authKey);
   if (authToken) {
     const decodedToken = tokenDecoded(authToken);
-    console.log(decodedToken);
     return decodedToken;
   }
 };
@@ -28,4 +28,15 @@ export const isUserLoggedIn = () => {
 
 export const removeUser = () => {
   return removeFormLocalStorage(authKey);
+};
+
+export const getNewAccessToken = async () => {
+  return await axiosInstance({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/refresh-token`,
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    withCredentials: true,
+  });
 };
