@@ -11,6 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import AccountMenu from "../AccountMenu/AccountMenu";
 import Sidebar from "../Sidebar/Sidebar";
 
 const drawerWidth = 240;
@@ -22,11 +23,14 @@ export default function ResponsiveDrawer({
 }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const { data: userData, isLoading } = useGetMyProfileQuery(undefined);
+  const {
+    data: userData,
+    isLoading,
+    isError,
+  } = useGetMyProfileQuery(undefined);
   if (isLoading) {
     return <p>loading...</p>;
   }
-  console.log(userData);
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -41,10 +45,6 @@ export default function ResponsiveDrawer({
       setMobileOpen(!mobileOpen);
     }
   };
-
-  // const profilePhoto = userData?.data?.profilePhoto
-  //   ? userData?.data?.profilePhoto
-  //   : userData?.data?.name;
 
   return (
     <Box sx={{ display: "flex" }}>
@@ -81,9 +81,9 @@ export default function ResponsiveDrawer({
               component="div"
               color="primary.main"
             >
-              {/* Welcome To, PH Health Care {userData?.data?.name || ""} !!! */}
+              Welcome To, PH Health Care {userData?.name || ""} !!!
             </Typography>
-            {/* <AccountMenu profilePhoto={profilePhoto} /> */}
+            <AccountMenu profilePhoto={userData?.profilePhoto} />
           </Stack>
         </Toolbar>
       </AppBar>

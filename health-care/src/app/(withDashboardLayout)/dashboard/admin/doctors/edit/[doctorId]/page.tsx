@@ -11,6 +11,7 @@ import {
 } from "@/redux/api/doctorsApi";
 import { Box, Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
@@ -41,6 +42,7 @@ const DoctorUpdatePage = ({ params }: TParams) => {
     values.experience = Number(values.experience);
     values.apointmentFee = Number(values.apointmentFee);
     values.id = doctorId;
+    console.log(values);
     console.log({ id: doctorId, body: values });
 
     try {
@@ -67,6 +69,10 @@ const DoctorUpdatePage = ({ params }: TParams) => {
     designation: data?.designation || "",
   };
 
+  const handleUploadFile = (file: File) => {
+    console.log(file);
+  };
+
   return (
     <Box>
       {isLoading ? (
@@ -75,8 +81,20 @@ const DoctorUpdatePage = ({ params }: TParams) => {
         <PHForm onSubmit={handleSubmit} defaultValues={data && defaultValues}>
           <Box>
             <Stack spacing={4}>
-              <Box sx={{ display: "flex", justifyContent: "end" }}>
-                <PHFileUploader name="file" label="Upload Doctor Image" />
+              <Box sx={{ display: "flex", justifyContent: "center" }}>
+                <Box sx={{ height: "150px", width: "150px" }}>
+                  <Image
+                    src={data?.profilePhoto || "/placeholder-image.png"}
+                    alt="Profile Photo"
+                    width={150}
+                    height={150}
+                  />
+                </Box>
+                <PHFileUploader
+                  onFileUpload={handleUploadFile}
+                  name="file"
+                  label="Upload Doctor Image"
+                />
               </Box>
               {/* grid - 1 */}
               <Grid container spacing={2}>
@@ -89,6 +107,7 @@ const DoctorUpdatePage = ({ params }: TParams) => {
                     name="email"
                     label="Email"
                     type="email"
+                    disabled={true}
                   />
                 </Grid>
                 <Grid size={{ xs: 4 }}>

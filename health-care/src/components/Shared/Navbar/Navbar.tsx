@@ -1,9 +1,11 @@
 "use client";
 import AuthButton from "@/components/UI/AuthButton/AuthButton";
+import { getUserInfo } from "@/services/auth.services";
 import { Container } from "@mui/material";
 import Link from "next/link";
 
 const Navbar = () => {
+  const { userId } = getUserInfo();
   return (
     <Container>
       <div className="flex py-5 items-center justify-between">
@@ -22,6 +24,7 @@ const Navbar = () => {
           <Link href="/consultation">Medicine</Link>
           <Link href="/consultation">Diogonostics</Link>
           <Link href="/consultation">NGOS</Link>
+          {userId && <Link href="/dashboard">Dashbaord</Link>}
         </div>
         <AuthButton />
       </div>

@@ -1,10 +1,9 @@
-"use server";
 import { authKey } from "@/constants/authKey";
 import { setTokenAccess } from "@/services/actions/setTokenAccess";
 import { getNewAccessToken } from "@/services/auth.services";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFormLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
@@ -30,14 +29,14 @@ instance.interceptors.request.use(
 
 // Add a response interceptor
 instance.interceptors.response.use(
-  function (response: AxiosResponse<ResponseSuccessType>) {
-    // Any status code that lies within the range of 2xx cause this function to trigger
+  function (response: ResponseSuccessType) {
+    // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    const responseObj: ResponseSuccessType = {
-      data: response.data.data,
-      meta: response.data.meta,
+    const responseObject: ResponseSuccessType = {
+      data: response?.data?.data,
+      meta: response?.data?.meta,
     };
-    return responseObj;
+    return responseObject;
   },
   async function (error) {
     const config = error.config;
@@ -45,8 +44,6 @@ instance.interceptors.response.use(
       config.sent = true;
       const response = await getNewAccessToken();
       const accessToken = response?.data?.accessToken;
-      console.log("axiosinstance", accessToken);
-
       config.headers["Authorization"] = accessToken;
       setLocalStorage(authKey, accessToken);
       setTokenAccess(accessToken);
@@ -57,11 +54,10 @@ instance.interceptors.response.use(
         message: error?.response?.data?.message || "Something went wrong!!!",
         errorMessages: error?.response?.data?.message,
       };
+      // Any status codes that fall outside the range of 2xx cause this function to trigger
+      // Do something with response error
       return responseObject;
     }
-    // Any status codes that fall outside the range of 2xx cause this function to trigger
-    // Do something with response error
-    return Promise.reject(error);
   }
 );
 

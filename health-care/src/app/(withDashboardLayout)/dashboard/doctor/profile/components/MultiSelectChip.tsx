@@ -1,4 +1,3 @@
-import { TSpecialty } from "@/types/specialities";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import FormControl from "@mui/material/FormControl";
@@ -7,11 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, useTheme } from "@mui/material/styles";
-type TSelectModalProps = {
-  secialitiesData: TSpecialty[] | undefined;
-  specialitesIds: string[];
-  setSpecialitiesIds: React.Dispatch<React.SetStateAction<string[]>>;
-};
+
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -24,62 +19,78 @@ const MenuProps = {
 };
 
 function getStyles(name: string, personName: readonly string[], theme: Theme) {
-  const isSelected = personName.includes(name);
   return {
-    fontWeight: isSelected
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
-    backgroundColor: isSelected ? theme.palette.action.selected : "inherit",
-    color: isSelected ? theme.palette.primary.contrastText : "inherit",
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
   };
 }
 
-export default function MultiSelectChip({
-  secialitiesData,
-  specialitesIds,
-  setSpecialitiesIds,
-}: TSelectModalProps) {
+export default function MultipleSelectChip({
+  allSpecialties,
+  setSelectedIds,
+  selectedIds,
+}: any) {
   const theme = useTheme();
 
-  const handleChange = (event: SelectChangeEvent<typeof specialitesIds>) => {
+  const handleChange = (event: SelectChangeEvent<typeof selectedIds>) => {
     const {
       target: { value },
     } = event;
-    setSpecialitiesIds(typeof value === "string" ? value.split(",") : value);
+
+    setSelectedIds(typeof value === "string" ? value.split(",") : value);
   };
 
   return (
     <div>
-      <FormControl sx={{ m: 1, width: 300 }}>
-        <InputLabel id="demo-multiple-chip-label">Specialities</InputLabel>
+      <FormControl sx={{ width: "100%" }}>
+        <InputLabel
+          id="demo-multiple-chip-label"
+          sx={{ mt: selectedIds.length > 0 ? 0 : -1 }}
+        >
+          Specialties
+        </InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
           id="demo-multiple-chip"
           multiple
-          value={specialitesIds}
+          value={selectedIds}
           onChange={handleChange}
           input={
-            <OutlinedInput id="select-multiple-chip" label="Specialities" />
+            <OutlinedInput
+              id="select-multiple-chip"
+              label="Specialties"
+              size="small"
+            />
           }
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((id) => {
-                const specialist = secialitiesData.find(
-                  (item) => item.id === id
-                );
-                return <Chip key={id} label={specialist?.title} />;
-              })}
+              {selected.map((value: any) => (
+                <Chip
+                  size="small"
+                  key={value}
+                  label={
+                    allSpecialties.find((item: any) => item.id === value)
+                      ? `${
+                          allSpecialties.find((item: any) => item.id === value)
+                            ?.title
+                        }`
+                      : ""
+                  }
+                />
+              ))}
             </Box>
           )}
           MenuProps={MenuProps}
         >
-          {secialitiesData.map((specialist) => (
+          {allSpecialties?.map((item: any) => (
             <MenuItem
-              key={specialist.id}
-              value={specialist.id}
-              style={getStyles(specialist.id, specialitesIds, theme)}
+              key={item?.id}
+              value={item.id}
+              style={getStyles(item.id, selectedIds, theme)}
             >
-              {specialist.title}
+              {item?.title}
             </MenuItem>
           ))}
         </Select>

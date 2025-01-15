@@ -28,7 +28,7 @@ const AccountMenu: React.FC<AccountMenuProps> = ({ profilePhoto }) => {
     <Box>
       <Box sx={{ borderRadius: "10px", cursor: "pointer" }}>
         <Image
-          src={profilePhoto || "fd"}
+          src={profilePhoto || "/default-profile.png"}
           alt="Profile Photo"
           width={50}
           height={50}

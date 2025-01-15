@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DoctorsResponse, TMeta } from "@/types";
+import { DoctorsResponse, TDoctor, TMeta } from "@/types";
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
@@ -34,6 +34,9 @@ const doctorsApi = baseApi.injectEndpoints({
         url: `/doctor/${id}`,
         method: "GET",
       }),
+      transformResponse: (response: TDoctor) => {
+        return response;
+      },
       providesTags: (result, error, id) => [{ type: tagTypes.doctor, id }],
     }),
     // update doctor data

@@ -2,8 +2,7 @@
 "use client";
 export const modifyData = (values: any) => {
   const obj = { ...values };
-  console.log("obj", obj);
-  const file = obj["file"];
+  const file = obj["file"] || obj["doctor"].profilePhoto;
   delete obj["file"];
   const data = JSON.stringify(obj);
   const formData = new FormData();

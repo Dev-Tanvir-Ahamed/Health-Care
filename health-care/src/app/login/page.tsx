@@ -68,7 +68,7 @@ const LoginPage = () => {
             />
           </Stack>
           <Box sx={{ textAlign: "right", mt: 2, mb: 4 }}>
-            <Link href="/forget-password" underline="none" variant="body2">
+            <Link href="/forget-password" variant="body2">
               Forget Password
             </Link>
           </Box>

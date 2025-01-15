@@ -9,6 +9,7 @@ type TInputProps = {
   sx?: SxProps;
   placeholder?: string;
   required?: boolean;
+  disabled?: boolean;
 };
 const InputForm = ({
   name,
@@ -16,6 +17,7 @@ const InputForm = ({
   type = "text",
   size = "small",
   sx,
+  disabled,
   placeholder,
   required,
   fullWidth,
@@ -34,6 +36,7 @@ const InputForm = ({
           fullWidth={fullWidth}
           type={type}
           size={size}
+          disabled={false}
           required={required}
           placeholder={label}
           error={!!error?.message}

@@ -22,7 +22,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 const DoctorsDataTable = ({ query }: Record<string, any>) => {
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
-  console.log(data);
+  // console.log(data);
 
   const [deleteDoctor] = useDeleteDoctorMutation();
   const [open, setOpen] = useState(false);
@@ -31,8 +31,8 @@ const DoctorsDataTable = ({ query }: Record<string, any>) => {
   const handleDelete = async () => {
     if (!selectedDoctorId) return;
     try {
-      const res = await deleteDoctor(selectedDoctorId).unwrap();
-      console.log(res);
+      const res = (await deleteDoctor(selectedDoctorId).unwrap()) as any;
+      // console.log(res);
 
       if (res?.id) {
         toast.success("Doctor deleted successfully!");

@@ -21,7 +21,12 @@ export default function PHFileUploader({
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
-      onFileUpload(file); // Trigger file upload callback
+      if (onFileUpload) {
+        // Check if onFileUpload is defined
+        onFileUpload(file); // Trigger file upload callback
+      } else {
+        console.warn("onFileUpload is not defined."); // Optional: log a warning
+      }
     }
   };
   return (

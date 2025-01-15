@@ -3,7 +3,7 @@
 import PHFileUploader from "@/components/Form/PHFileUpload";
 import {
   useGetMyProfileQuery,
-  useUpdataMyProfileMutation,
+  useUpdateMyProfileMutation,
 } from "@/redux/api/myProfileApi";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { Box, Button, Container, Typography } from "@mui/material";
@@ -15,35 +15,32 @@ import UpdateDoctorProfile from "./components/UpdateDoctorProfile";
 const Profile = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { data, isLoading } = useGetMyProfileQuery(undefined);
-  console.log(data);
+  // console.log(data);
 
   const [updateMYProfile, { data: updateData, isLoading: updating }] =
-    useUpdataMyProfileMutation();
+    useUpdateMyProfileMutation();
 
   const fileUploadHandler = (file: File) => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("data", JSON.stringify({}));
-
     updateMYProfile(formData);
   };
 
-  console.log(updateData);
+  // console.log(updateData);
 
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
-  const profilePhoto = data?.data?.profilePhoto
-    ? data?.data?.profilePhoto
-    : data?.data?.name;
+  const profilePhoto = data?.profilePhoto ? data?.profilePhoto : null;
 
   return (
     <>
       <UpdateDoctorProfile
         open={isModalOpen}
         setOpen={setIsModalOpen}
-        id={data?.data?.id}
+        id={data?.id}
       />
       <Container sx={{ mt: 4 }}>
         <Grid container spacing={4}>
@@ -56,12 +53,23 @@ const Profile = () => {
                 borderRadius: 1,
               }}
             >
-              <Image
-                height={300}
-                width={400}
-                src={profilePhoto}
-                alt="User Photo"
-              />
+              {profilePhoto ? (
+                <Image
+                  height={300}
+                  width={400}
+                  src={profilePhoto}
+                  alt="User Photo"
+                  priority
+                />
+              ) : (
+                <Box
+                  sx={{
+                    border: "1px solid black",
+                    width: "150px",
+                    height: "150px",
+                  }}
+                ></Box>
+              )}
             </Box>
             <Box my={3}>
               {updating ? (

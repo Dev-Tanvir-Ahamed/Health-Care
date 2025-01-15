@@ -1,19 +1,15 @@
-"use client";
-import { getUserInfo, removeUser } from "@/services/auth.services";
+import { logoutUser } from "@/services/actions/logoutUser";
+import { getUserInfo } from "@/services/auth.services";
 import { Button } from "@mui/material";
-
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const AuthButton = () => {
-  const [userData, setUserData] = useState(null);
-  useEffect(() => {
-    setUserData(getUserInfo());
-  }, []);
-  //   const userData = getUserInfo();
+  const router = useRouter();
+  const userData = getUserInfo() as any;
+
   const handleLogOut = () => {
-    removeUser(); // Clear the user data (e.g., localStorage)
-    setUserData(null); // Update the state to reflect the logout
+    logoutUser(router);
   };
 
   return (

@@ -1,4 +1,5 @@
 import { Button, Container } from "@mui/material";
+import Link from "next/link";
 import DoctorCard from "./DoctorCard";
 
 const TopRatedDoctors = async () => {
@@ -29,7 +30,9 @@ const TopRatedDoctors = async () => {
         </div>
       </Container>
       <div className="text-center">
-        <Button variant="outlined">View All</Button>
+        <Link href="/doctors">
+          <Button variant="outlined">View All</Button>
+        </Link>
       </div>
     </div>
   );

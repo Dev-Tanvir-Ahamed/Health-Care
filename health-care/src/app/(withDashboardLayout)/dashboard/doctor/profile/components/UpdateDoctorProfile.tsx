@@ -1,5 +1,4 @@
-// "use client";
-import MultiSelectChip from "@/app/(withDashboardLayout)/dashboard/doctor/profile/components/MultiSelectChip";
+"use client";
 import InputForm from "@/components/Form/InputForm";
 import PHForm from "@/components/Form/PHForm";
 import SelectField from "@/components/Form/SelectField";
@@ -14,10 +13,12 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import MultipleSelectChip from "./MultiSelectChip";
 interface TPropsWithId extends TProps {
   id: string;
 }
@@ -40,60 +41,62 @@ const validationSchema = z.object({
 });
 
 const UpdateDoctorProfile = ({ open, setOpen, id }: TPropsWithId) => {
-  const [specialitesIds, setSpecialitiesIds] = useState<string[]>([]);
+  const router = useRouter();
+  const { data, refetch, isSuccess } = useGetSingleDoctorQuery(id);
+  const { data: allSpecialties } = useGetSpecialistsQuery(undefined);
+  const [selectedSpecialtiesIds, setSelectedSpecialtiesIds] = useState([]);
 
-  const {
-    data,
-    isLoading: isDoctorLoading,
-    refetch,
-  } = useGetSingleDoctorQuery(id, {
-    refetchOnMountOrArgChange: true,
-  });
-  const { data: specialitiesData, isLoading: isSpecialitiesLoading } =
-    useGetSpecialistsQuery(undefined);
-  const [updateDoctor] = useUpdateDoctorMutation();
-  if (isDoctorLoading) {
-    return <p>loading..</p>;
-  }
-  if (isSpecialitiesLoading) {
-    return <p>loading..</p>;
-  }
+  const [updateDoctor, { isLoading: updating }] = useUpdateDoctorMutation();
+
+  useEffect(() => {
+    if (!isSuccess) return;
+
+    setSelectedSpecialtiesIds(
+      data?.doctorSpecialties?.map((sp) => {
+        return sp.specialtiesId;
+      }) || []
+    );
+  }, [isSuccess, data]);
+
   const onSubmit = async (values: FieldValues) => {
-    const doctorSpecialties = specialitesIds.map((specialtiesId: string) => ({
+    console.log(values);
+
+    const specialties = selectedSpecialtiesIds.map((specialtiesId: string) => ({
       specialtiesId,
       isDeleted: false,
     }));
-
-    console.log({ id });
+    // console.log({ id });
     // return;
 
-    const excludedFields: Array<keyof typeof values> = [
-      "email",
-      "id",
-      "role",
-      "needPasswordChange",
-      "status",
-      "createdAt",
-      "updatedAt",
-      "isDeleted",
-      "averageRating",
-      "review",
-      "profilePhoto",
-      "registrationNumber",
-      "schedules",
-      "doctorSpecialties",
-    ];
+    // const excludedFields: Array<keyof typeof values> = [
+    //   "email",
+    //   "id",
+    //   "role",
+    //   "needPasswordChange",
+    //   "status",
+    //   "createdAt",
+    //   "updatedAt",
+    //   "isDeleted",
+    //   "averageRating",
+    //   "review",
+    //   "profilePhoto",
+    //   "registrationNumber",
+    //   "schedules",
+    //   "doctorSpecialties",
+    // ];
 
-    const updatedValues = Object.fromEntries(
-      Object.entries(values).filter(([key]) => {
-        return !excludedFields.includes(key);
-      })
-    );
+    // const updatedValues = Object.fromEntries(
+    //   Object.entries(values).filter(([key]) => {
+    //     return !excludedFields.includes(key);
+    //   })
+    // );
 
-    console.log("update values", updatedValues);
+    // console.log("update values", updatedValues);
 
-    updatedValues.doctorSpecialties = doctorSpecialties;
-    console.log(updatedValues);
+    // updatedValues.doctorSpecialties = doctorSpecialties;
+    // console.log(updatedValues);
+    values.specialties = specialties;
+    console.log(values);
 
     try {
       const res = await updateDoctor({ body: values, id }).unwrap();
@@ -101,9 +104,24 @@ const UpdateDoctorProfile = ({ open, setOpen, id }: TPropsWithId) => {
       toast.success("Doctor Data Updated Succesfully");
       refetch();
       setOpen(false);
+      router.push("/dashboard/doctor/profile");
     } catch (error) {
       console.log(error);
     }
+  };
+  const defaultValues = {
+    name: data?.name,
+    email: data?.email,
+    address: data?.address,
+    contactNumber: data?.contactNumber,
+    registrationNumber: data?.registrationNumber,
+    experience: data?.experience || "",
+    apointmentFee: data?.apointmentFee,
+    gender: data?.gender,
+    qualification: data?.qualification,
+    currentWorkingPlace: data?.currentWorkingPlace,
+    designation: data?.designation,
+    doctorSpecialties: data?.doctorSpecialties || [],
   };
   return (
     <FullScreenModal
@@ -113,7 +131,7 @@ const UpdateDoctorProfile = ({ open, setOpen, id }: TPropsWithId) => {
     >
       <PHForm
         onSubmit={onSubmit}
-        defaultValues={data || {}}
+        defaultValues={defaultValues}
         resolver={zodResolver(validationSchema)}
       >
         <Box>
@@ -191,11 +209,12 @@ const UpdateDoctorProfile = ({ open, setOpen, id }: TPropsWithId) => {
               <Grid size={{ xs: 4 }}>
                 <InputForm fullWidth name="designation" label="Designation" />
               </Grid>
+
               <Grid size={{ xs: 4 }}>
-                <MultiSelectChip
-                  secialitiesData={specialitiesData}
-                  specialitesIds={specialitesIds}
-                  setSpecialitiesIds={setSpecialitiesIds}
+                <MultipleSelectChip
+                  allSpecialties={allSpecialties}
+                  selectedIds={selectedSpecialtiesIds}
+                  setSelectedIds={setSelectedSpecialtiesIds}
                 />
               </Grid>
             </Grid>

@@ -1,5 +1,5 @@
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { Button } from "@mui/material";
+import { Box, Button, Stack } from "@mui/material";
 import Image from "next/image";
 
 interface Doctor {
@@ -13,19 +13,33 @@ interface Doctor {
 
 const DoctorCard = ({ data }: { data: Doctor[] }) => {
   return (
-    <>
+    <Stack direction="row" gap={3} sx={{}}>
       {data.map((item: Doctor) => {
         return (
-          <div key={item.id} className="bg-white h-[450px] w-[350px]">
-            <div>
-              <Image
-                src={item.profilePhoto}
-                alt={item.name || "Doctor's profile image"}
-                width={350}
-                height={200}
-                className="object-contain"
-              />
-            </div>
+          <Box key={item.id} sx={{ background: "white" }} pb={4}>
+            <Box
+              sx={{
+                width: "100%",
+                height: "400px",
+
+                "& img": {
+                  width: "100%",
+                  height: "100%",
+                  overflow: "hidden",
+                  objectFit: "cover",
+                },
+              }}
+            >
+              {item.profilePhoto && (
+                <Image
+                  src={item.profilePhoto}
+                  alt={item.name || "Doctor's profile image"}
+                  width={350}
+                  height={200}
+                  className="object-contain"
+                />
+              )}
+            </Box>
             <div className="ml-3">
               <p className="text-2xl font-bold mt-3 mb-1">{item.name}</p>
               <div className="flex gap-2 text-small text-gray-500">
@@ -43,10 +57,10 @@ const DoctorCard = ({ data }: { data: Doctor[] }) => {
                 View Profile
               </Button>
             </div>
-          </div>
+          </Box>
         );
       })}
-    </>
+    </Stack>
   );
 };
 

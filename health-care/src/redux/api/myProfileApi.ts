@@ -1,35 +1,29 @@
 import { tagTypes } from "../tag-types";
 import { baseApi } from "./baseApi";
 
-const myProfileAPi = baseApi.injectEndpoints({
+const myProfileApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getMyProfile: build.query({
-      query: () => {
-        return {
-          url: "/user/me",
-          method: "GET",
-        };
-      },
-      transformResponse: (response: any) => {
-        return {
-          data: response,
-        };
-      },
+      query: () => ({
+        url: "/user/me",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response, // Use raw response
       providesTags: [tagTypes.user],
     }),
-    updataMyProfile: build.mutation({
-      query: (data) => {
-        return {
-          url: "/user/update-my-profile",
-          method: "PATCH",
-          data,
-          ContentType: "multipart/form-data",
-        };
-      },
+    updateMyProfile: build.mutation({
+      query: (data) => ({
+        url: "/user/update-my-profile",
+        method: "PATCH",
+        body: data,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
       invalidatesTags: [tagTypes.user],
     }),
   }),
 });
 
-export const { useGetMyProfileQuery, useUpdataMyProfileMutation } =
-  myProfileAPi;
+export const { useGetMyProfileQuery, useUpdateMyProfileMutation } =
+  myProfileApi;
