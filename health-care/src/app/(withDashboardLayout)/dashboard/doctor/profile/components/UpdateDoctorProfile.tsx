@@ -42,7 +42,7 @@ const validationSchema = z.object({
 
 const UpdateDoctorProfile = ({ open, setOpen, id }: TPropsWithId) => {
   const router = useRouter();
-  const { data, refetch, isSuccess } = useGetSingleDoctorQuery(id);
+  const { data, refetch } = useGetSingleDoctorQuery(id);
   const { data: allSpecialties } = useGetSpecialistsQuery(undefined);
   const [selectedSpecialtiesIds, setSelectedSpecialtiesIds] = useState([]);
 

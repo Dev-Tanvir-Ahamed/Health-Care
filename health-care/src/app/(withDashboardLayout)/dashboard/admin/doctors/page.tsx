@@ -16,7 +16,7 @@ const AdminDoctorPage = () => {
     searchQuery: searchTerm,
     delay: 600,
   });
-  if (!!debouncedTerm) {
+  if (debouncedTerm) {
     query["searchTerm"] = debouncedTerm;
   }
 

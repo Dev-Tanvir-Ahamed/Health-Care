@@ -16,7 +16,6 @@ const SchedulesPage = () => {
   const { data, isLoading } = useGetAllSchedulesQuery({});
 
   const schedules = data?.schedules;
-  const meta = data?.meta;
 
   console.log(schedules);
 
@@ -45,7 +44,7 @@ const SchedulesPage = () => {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ row }) => {
+      renderCell: () => {
         return (
           <IconButton aria-label="delete">
             <DeleteIcon sx={{ color: "red" }} />
