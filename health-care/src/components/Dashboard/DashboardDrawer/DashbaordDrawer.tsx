@@ -23,11 +23,7 @@ export default function ResponsiveDrawer({
 }) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
-  const {
-    data: userData,
-    isLoading,
-    isError,
-  } = useGetMyProfileQuery(undefined);
+  const { data: userData, isLoading } = useGetMyProfileQuery(undefined);
   if (isLoading) {
     return <p>loading...</p>;
   }
