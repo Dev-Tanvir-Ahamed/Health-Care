@@ -19,7 +19,9 @@ export interface IDrawerItem {
   title: string;
   path: string;
   parrentPath?: string;
-  icon?: OverridableComponent<SvgIconTypeMap<{}, "svg">> & { muiName: string };
+  icon?: OverridableComponent<SvgIconTypeMap<object, "svg">> & {
+    muiName: string;
+  };
   child?: IDrawerItem[];
 }
 

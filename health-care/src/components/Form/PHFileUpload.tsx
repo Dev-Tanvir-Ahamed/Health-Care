@@ -16,7 +16,6 @@ export default function PHFileUploader({
   label,
   sx,
   onFileUpload,
-  varient,
 }: TProps) {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -38,6 +37,7 @@ export default function PHFileUploader({
     >
       {label || "Upload Image"}
       <Input
+        name={name}
         type="file"
         onChange={handleFileChange}
         style={{ display: "none" }}

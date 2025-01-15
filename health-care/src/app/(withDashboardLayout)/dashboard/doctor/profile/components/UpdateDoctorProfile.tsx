@@ -14,7 +14,7 @@ import { Box, Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -46,17 +46,17 @@ const UpdateDoctorProfile = ({ open, setOpen, id }: TPropsWithId) => {
   const { data: allSpecialties } = useGetSpecialistsQuery(undefined);
   const [selectedSpecialtiesIds, setSelectedSpecialtiesIds] = useState([]);
 
-  const [updateDoctor, { isLoading: updating }] = useUpdateDoctorMutation();
+  const [updateDoctor] = useUpdateDoctorMutation();
 
-  useEffect(() => {
-    if (!isSuccess) return;
+  // useEffect(() => {
+  //   if (!isSuccess) return;
 
-    setSelectedSpecialtiesIds(
-      data?.doctorSpecialties?.map((sp) => {
-        return sp.specialtiesId;
-      }) || []
-    );
-  }, [isSuccess, data]);
+  //   setSelectedSpecialtiesIds(
+  //     data?.doctorSpecialties?.map((sp) => {
+  //       return sp.specialtiesId;
+  //     }) || []
+  //   );
+  // }, [isSuccess, data]);
 
   const onSubmit = async (values: FieldValues) => {
     console.log(values);

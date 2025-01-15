@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { formatDate } from "@/utils/formatDate";
 import { Box, Typography } from "@mui/material";
-
-const DoctorsScheduleSlots = async ({ id }) => {
+interface DoctorsScheduleSlotsProps {
+  id: string;
+}
+const DoctorsScheduleSlots = async ({ id }: DoctorsScheduleSlotsProps) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor-schedule`
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor-schedule/${id}`
   );
   const data = await res.json();
   console.log(data);

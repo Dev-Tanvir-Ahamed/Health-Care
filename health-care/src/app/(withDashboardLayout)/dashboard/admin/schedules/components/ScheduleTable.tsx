@@ -39,7 +39,7 @@ const ScheduleTable = () => {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: ({ row }) => {
+      renderCell: () => {
         return (
           <IconButton aria-label="delete">
             <DeleteIcon sx={{ color: "red" }} />

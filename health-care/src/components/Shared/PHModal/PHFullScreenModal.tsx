@@ -31,7 +31,6 @@ export default function FullScreenModal({
   setOpen,
   title = "",
   children,
-  sx,
 }: TModalProps) {
   const handleClose = () => {
     setOpen(false);

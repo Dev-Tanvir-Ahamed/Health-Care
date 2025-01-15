@@ -45,7 +45,8 @@ const ResetPassword = () => {
       } else {
         throw new Error("Something Went Wrong, Try Again");
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.log(error);
       toast.success("Something Went Wrong, Try Again");
     }
   };
