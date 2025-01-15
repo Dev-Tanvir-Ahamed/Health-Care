@@ -2,10 +2,10 @@ import { Box, Chip, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
 import DoctorsScheduleSlots from "../comoponents/DoctorsScheduleSlots";
 
-type PropTypes = {
-  params: {
+type PageProps = {
+  params: Awaited<{
     id: string;
-  };
+  }>;
 };
 
 const InfoBoxStyles = {
@@ -21,7 +21,7 @@ const InfoBoxStyles = {
   },
 };
 
-const DoctorsProfilePage = async ({ params }: PropTypes) => {
+const DoctorsProfilePage = async ({ params }: PageProps) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor/${params.id}`
   );
