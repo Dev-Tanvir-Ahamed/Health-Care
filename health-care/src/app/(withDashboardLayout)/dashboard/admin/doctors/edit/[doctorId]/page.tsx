@@ -12,26 +12,14 @@ import {
 import { Box, Button, Stack } from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 import DoctorUpdateSkeleton from "./DoctorUpdateSkelton";
-type TParams = {
-  params: {
-    then: any;
-    doctorId: string;
-  };
-};
+// Define the structure of PageProps for this page
 
-const DoctorUpdatePage = ({ params }: TParams) => {
-  const [doctorId, setDoctorId] = useState<string | null>(null);
+const DoctorUpdatePage = ({ params }: any) => {
+  const { doctorId } = params;
 
-  useEffect(() => {
-    // Unwrap the params Promise and set the doctorId
-    params.then((unwrappedParams: any) => {
-      setDoctorId(unwrappedParams.doctorId);
-    });
-  }, [params]);
   // Use the skip option to prevent the query from running if doctorId is null
   const { data, isLoading } = useGetSingleDoctorQuery(doctorId || "", {
     skip: !doctorId, // Skip the query if doctorId is not available
@@ -107,7 +95,6 @@ const DoctorUpdatePage = ({ params }: TParams) => {
                     name="email"
                     label="Email"
                     type="email"
-                    disabled={true}
                   />
                 </Grid>
                 <Grid size={{ xs: 4 }}>

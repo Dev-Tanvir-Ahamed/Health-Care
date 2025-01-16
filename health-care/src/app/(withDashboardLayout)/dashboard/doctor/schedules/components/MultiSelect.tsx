@@ -68,9 +68,9 @@ export default function MultiSelect({
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => {
+              {selected.map((value: any) => {
                 const selectedSchedule = schedules.find(
-                  (schedule) => schedule.id === value
+                  (schedule: any) => schedule.id === value
                 );
                 if (!selectedSchedule) {
                   return null;

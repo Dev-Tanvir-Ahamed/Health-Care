@@ -5,11 +5,11 @@ interface DoctorsScheduleSlotsProps {
   id: string;
 }
 const DoctorsScheduleSlots = async ({ id }: DoctorsScheduleSlotsProps) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor-schedule/${id}`
-  );
-  const data = await res.json();
-  console.log(data);
+  // const res = await fetch(
+  //   `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor-schedule/${id}`
+  // );
+  // const data = await res.json();
+  // console.log(data);
   //   const doctorAvailableSlot = data?.schedules?.map((scheduleId) => scheduleId)
 
   return (

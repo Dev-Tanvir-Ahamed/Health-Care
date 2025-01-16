@@ -1,12 +1,5 @@
 import { Box, Chip, Container, Stack, Typography } from "@mui/material";
 import Image from "next/image";
-import DoctorsScheduleSlots from "../comoponents/DoctorsScheduleSlots";
-
-type PageProps = {
-  params: Awaited<{
-    id: string;
-  }>;
-};
 
 const InfoBoxStyles = {
   background:
@@ -21,16 +14,18 @@ const InfoBoxStyles = {
   },
 };
 
-const DoctorsProfilePage = async ({ params }: PageProps) => {
+const Page = async ({ params }: any) => {
+  const { id } = await params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor/${params.id}`
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/doctor/${id}`
   );
   const { data: doctor } = await res.json();
 
   const specialties = doctor.doctorSpecialties.map(
     (ds: any) => ds.specialties.title
   );
-
+  const photo =
+    "https://static.vecteezy.com/system/resources/thumbnails/026/489/224/small_2x/muslim-malay-woman-doctor-in-hospital-with-copy-space-ai-generated-photo.jpg";
   return (
     <Container>
       <Box my={5}>
@@ -56,10 +51,11 @@ const DoctorsProfilePage = async ({ params }: PageProps) => {
             <Stack direction="row" gap={3}>
               <Box sx={{ width: 281, height: 281, bgcolor: "#808080" }}>
                 <Image
-                  src={doctor?.profilePhoto}
+                  src={doctor?.profilePhoto || photo}
                   alt="doctor image"
                   width={281}
                   height={281}
+                  priority
                   style={{
                     height: "281px",
                   }}
@@ -95,12 +91,11 @@ const DoctorsProfilePage = async ({ params }: PageProps) => {
                   </Stack>
                 </Box>
 
-                {/* <DashedLine /> */}
                 <Box>
                   <Typography sx={{ my: "2px" }}>Working at</Typography>
                   <Typography>{doctor?.currentWorkingPlace}</Typography>
                 </Box>
-                {/* <DashedLine /> */}
+
                 <Box>
                   <Stack direction="row">
                     <Typography
@@ -154,9 +149,9 @@ const DoctorsProfilePage = async ({ params }: PageProps) => {
           </Stack>
         </Box>
       </Box>
-      <DoctorsScheduleSlots id={doctor.id} />
+      {/* <DoctorScheduleSlots id={doctor.id} /> */}
     </Container>
   );
 };
 
-export default DoctorsProfilePage;
+export default Page;

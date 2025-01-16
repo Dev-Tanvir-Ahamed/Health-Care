@@ -5,7 +5,7 @@ import { Container } from "@mui/material";
 import Link from "next/link";
 
 const Navbar = () => {
-  const { userId } = getUserInfo();
+  const { userId } = getUserInfo() as any;
   return (
     <Container>
       <div className="flex py-5 items-center justify-between">

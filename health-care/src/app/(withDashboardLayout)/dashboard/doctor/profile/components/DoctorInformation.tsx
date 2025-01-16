@@ -10,7 +10,7 @@ const StyleInformationBox = styled(Box)(({ theme }) => ({
     fontWeight: 600,
   },
 }));
-const DoctorInformation = ({ data }) => {
+const DoctorInformation = ({ data }: any) => {
   return (
     <>
       <Typography variant="h4" color="primary.main" my={2}>
