@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 type TSpecilistiesProps = {
   id: string;
-  titie: string;
+  title: string;
   icon: string;
 };
 const Specialists = async () => {

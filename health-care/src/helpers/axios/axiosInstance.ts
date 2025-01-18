@@ -3,7 +3,7 @@ import { setTokenAccess } from "@/services/actions/setTokenAccess";
 import { getNewAccessToken } from "@/services/auth.services";
 import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
 import { getFormLocalStorage, setLocalStorage } from "@/utils/local-storage";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const instance = axios.create();
 instance.defaults.headers.post["Content-Type"] = "application/json";
@@ -29,14 +29,18 @@ instance.interceptors.request.use(
 
 // Add a response interceptor
 instance.interceptors.response.use(
-  function (response: ResponseSuccessType) {
+  function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     const responseObject: ResponseSuccessType = {
       data: response?.data?.data,
       meta: response?.data?.meta,
     };
-    return responseObject;
+    // Return a new AxiosResponse object with the transformed data
+    return {
+      ...response,
+      data: responseObject, // Replace the data with the transformed response
+    } as AxiosResponse;
   },
   async function (error) {
     const config = error.config;
