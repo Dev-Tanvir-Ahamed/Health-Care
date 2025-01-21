@@ -1,7 +1,7 @@
 import { authKey } from "@/constants/authKey";
 import { setTokenAccess } from "@/services/actions/setTokenAccess";
 import { getNewAccessToken } from "@/services/auth.services";
-import { IGenericErrorResponse, ResponseSuccessType } from "@/types";
+import { IGenericErrorResponse } from "@/types";
 import { getFormLocalStorage, setLocalStorage } from "@/utils/local-storage";
 import axios, { AxiosResponse } from "axios";
 
@@ -32,16 +32,12 @@ instance.interceptors.response.use(
   function (response: AxiosResponse) {
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
-    const responseObject: ResponseSuccessType = {
+    const responseObject = {
       data: response?.data?.data,
-      meta: response?.data?.meta,
+      meta: response?.data?.data,
     };
-    // Return a new AxiosResponse object with the transformed data
-    return {
-      ...response,
-      data: responseObject, // Replace the data with the transformed response
-    } as AxiosResponse;
-  },
+    return responseObject;
+  } as any,
   async function (error) {
     const config = error.config;
     if (error?.response?.status === 500 && !config.sent) {

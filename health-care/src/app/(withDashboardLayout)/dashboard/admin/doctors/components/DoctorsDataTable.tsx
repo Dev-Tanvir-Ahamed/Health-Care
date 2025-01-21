@@ -22,7 +22,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 const DoctorsDataTable = ({ query }: Record<string, any>) => {
   const { data, isLoading } = useGetAllDoctorsQuery({ ...query });
-  // console.log(data);
+  console.log(data);
 
   const [deleteDoctor] = useDeleteDoctorMutation();
   const [open, setOpen] = useState(false);
