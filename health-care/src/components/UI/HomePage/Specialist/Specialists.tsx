@@ -7,11 +7,14 @@ type TSpecilistiesProps = {
   icon: string;
 };
 const Specialists = async () => {
-  const res = await fetch("http://localhost:5000/api/v1/specialties", {
-    next: {
-      revalidate: 30,
-    },
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_API}/specialties`,
+    {
+      next: {
+        revalidate: 30,
+      },
+    }
+  );
   const { data: specialists } = await res.json();
   // console.log(specialists);
 
