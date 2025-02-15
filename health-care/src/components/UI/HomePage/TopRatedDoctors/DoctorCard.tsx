@@ -14,7 +14,7 @@ interface Doctor {
 const DoctorCard = ({ data }: { data: Doctor[] }) => {
   return (
     <Stack direction="row" gap={3} sx={{}}>
-      {data.map((item: Doctor) => {
+      {data?.map((item: Doctor) => {
         return (
           <Box key={item.id} sx={{ background: "white" }} pb={4}>
             <Box
