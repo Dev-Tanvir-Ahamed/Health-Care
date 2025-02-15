@@ -6,89 +6,9 @@
     "auditLog": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\.0790db9399b565adc6821db15a85d8316afd9072-audit.json",
     "files": [
         {
-            "date": 1736573495083,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-11-01-11-error.log",
-            "hash": "9391172c372be44a8f58b90b45e1c42fe0559603f345899c295dfe382bd406b0"
-        },
-        {
-            "date": 1736661625387,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-12-01-12-error.log",
-            "hash": "d506e4f516f73d70b6713ca2869728b91570de5eddad6a4bdcbc407308034eaf"
-        },
-        {
-            "date": 1736701254134,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-12-01-23-error.log",
-            "hash": "5c5b79c59feed260e6e8f69ce5fe8808c85fbb4dbd23637618d7ed9f52f6971d"
-        },
-        {
-            "date": 1736706239468,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-13-01-00-error.log",
-            "hash": "b1caa4d76807bea06aacc4cbf43a2add05cb89e03b615be36d38cf2d822387a3"
-        },
-        {
-            "date": 1736745255880,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-13-01-11-error.log",
-            "hash": "3c2128de90f5730ef34ad7e879f202d9454823f81d54158857bdf2c07e83d404"
-        },
-        {
-            "date": 1736770307059,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-13-01-18-error.log",
-            "hash": "8139927ce1ee1a8723cfaf75f6e906bb02fa85b3479ee7e5666dfb85c261c56d"
-        },
-        {
-            "date": 1736801584082,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-14-01-02-error.log",
-            "hash": "500cfd7b94304d2fbb63800d2baa0746af29d46579cd50afdd6120712aa1401c"
-        },
-        {
-            "date": 1736836971728,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-14-01-12-error.log",
-            "hash": "20fff5fbab0c3a74ff5577db3af9c2e2d48d65510879618a5e4a7c1a4467e870"
-        },
-        {
-            "date": 1736905005916,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-15-01-07-error.log",
-            "hash": "b6bee0769b9abb2cc6138319a5bc201ba474d304ff2adf340d89fd87fdc4eccd"
-        },
-        {
-            "date": 1736961655383,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-15-01-23-error.log",
-            "hash": "261d3484e5fa1d06d434a08be9aa5b48b43113feafca004f3219976cae97077a"
-        },
-        {
-            "date": 1736965643558,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-16-01-00-error.log",
-            "hash": "daabbef7fb506045c7c931bcf5780146d730074285785968a00d94f9c92e02bd"
-        },
-        {
-            "date": 1737004945350,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-16-01-11-error.log",
-            "hash": "d82e9b2b50a899888ac8095bf789bbf7d1709fc81bb20305c2e881818587cf0e"
-        },
-        {
-            "date": 1737168401769,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-18-01-08-error.log",
-            "hash": "e6180164da503da4364ab1ee11c1e8af7ce5dbc44cdd915d458a1f60d757f310"
-        },
-        {
-            "date": 1737191376134,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-18-01-15-error.log",
-            "hash": "35af356eda3b5aff3bd4bea57d7c7ac3adc0317496c2ed1673beac27942bf412"
-        },
-        {
-            "date": 1737427672730,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-21-01-08-error.log",
-            "hash": "b3de715e61aa145452c3b3fc2790e700c453f7a85cc8b603d7ff8278a8118c47"
-        },
-        {
-            "date": 1737442594377,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-21-01-12-error.log",
-            "hash": "a1d84d4be395dceb94df56fa425e76899e6139bd059a7ae82d87003495036d2e"
-        },
-        {
-            "date": 1737735482733,
-            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-24-01-22-error.log",
-            "hash": "d216e3ac7a15b85feaadf89ffb0ef0d9115580fd04c97910106bcac2d87fc58f"
+            "date": 1739595501150,
+            "name": "C:\\Users\\user\\Desktop\\HealthCare\\HealthCare-Server\\logs\\winston\\errors\\phu-2025-15-02-10-error.log",
+            "hash": "d827f7794fd707fddc323f3a3da16a3bb2c1591c27ac16e9827100efad69e269"
         }
     ],
     "hashType": "sha256"
