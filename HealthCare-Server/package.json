@@ -4,6 +4,7 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
+    "start": "node dist/server.js",
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "ass": "ts-node-dev --respawn --transpile-only assignment.ts",
     "prod": "NODE_ENV=production ts-node-dev --respawn --transpile-only src/server.ts",
